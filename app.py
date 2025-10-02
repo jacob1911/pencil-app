@@ -3,7 +3,6 @@ import io
 import uuid
 import math
 from pathlib import Path
-
 from flask import Flask, render_template, request, send_file, abort, jsonify
 from PIL import Image, ImageDraw
 
