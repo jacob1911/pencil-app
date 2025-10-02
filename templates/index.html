@@ -1,0 +1,114 @@
+<!-- templates/index.html -->
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pencil Corridor – SVG over Canvas</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <header class="toolbar">
+        <div class="left">
+            <label class="file-btn">
+                <input id="fileInput" type="file" accept="image/*" />
+                Upload image…
+            </label>
+
+            <button id="newPathBtn" title="Start a new path">New path</button>
+            <button id="undoBtn" title="Undo last point">Undo</button>
+
+            <label class="inline">
+                Corridor (px):
+                <input id="corridorRange" type="range" min="1" max="100" value="12" />
+                <span id="corridorVal">12</span>
+            </label>
+
+            <label class="inline">
+                Smoothing:
+                <input id="smoothRange" type="range" min="0" max="1" step="0.05" value="0.4" />
+                <span id="smoothVal">0.40</span>
+            </label>
+
+            <label class="inline">
+                Edit mode:
+                <input id="editModeChk" type="checkbox" />
+            </label>
+
+            <label class="inline">
+                Show handles:
+                <input id="showHandlesChk" type="checkbox" checked />
+            </label>
+
+            <label class="inline">
+                Stroke color:
+                <input id="colorPicker" type="color" value="#00AAFF" />
+            </label>
+
+            <label class="inline">
+                Outside fade:
+                <input id="outsideFadeRange" type="range" min="0" max="100" value="80" />
+                <span id="outsideFadeVal">80%</span>
+            </label>
+
+            <label class="inline">
+                Marker opacity:
+                <input id="markerOpacityRange" type="range" min="0" max="100" value="70" />
+                <span id="markerOpacityVal">70%</span>
+            </label>
+
+        </div>
+
+        <div class="right">
+            <button id="downloadPngBtn" class="accent">Download merged PNG</button>
+            <button id="downloadSvgBtn">Download SVG only</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="stage" class="stage">
+            <!-- Raster target -->
+            <canvas id="raster" aria-label="Base image"></canvas>
+
+            <!-- SVG overlay (vector) -->
+
+            <svg id="overlay" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Corridor overlay">
+                <defs>
+                    <style>
+                        .corridor {
+                            fill: none;
+                            stroke-linecap: round;
+                            stroke-linejoin: round;
+                        }
+
+                        .handles circle {
+                            fill: #fff;
+                            stroke: #333;
+                            stroke-width: 1;
+                            cursor: move;
+                        }
+                    </style>
+                </defs>
+
+
+                <g id="paths">
+                    <path id="previewPath" class="corridor" opacity="0.5" stroke="#00AAFF" />
+                    <path id="corridorPath" class="corridor" />
+                </g>
+
+
+                <g id="handles" class="handles"></g>
+
+            </svg>
+        </div>
+    </main>
+
+    <!-- Hidden image used to paint onto canvas -->
+    <img id="hiddenImage" alt="" style="display:none" />
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>

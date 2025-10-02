@@ -1,0 +1,147 @@
+/* static/css/styles.css */
+:root {
+    --toolbar-bg: #0f172a;
+    --toolbar-fg: #e2e8f0;
+    --accent: #22c55e;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: #0b1020;
+    color: #e6edf3;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem 1rem;
+    position: sticky;
+    top: 0;
+    background: var(--toolbar-bg);
+    color: var(--toolbar-fg);
+    border-bottom: 1px solid #243047;
+    z-index: 10;
+}
+
+.toolbar .left,
+.toolbar .right {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+}
+
+.file-btn {
+    padding: .4rem .6rem;
+    background: #1f2937;
+    border: 1px solid #334155;
+    border-radius: .4rem;
+    cursor: pointer;
+}
+
+.file-btn input {
+    display: none;
+}
+
+button {
+    padding: .45rem .7rem;
+    border-radius: .4rem;
+    border: 1px solid #334155;
+    background: #162035;
+    color: #e2e8f0;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1c2a48;
+}
+
+button.accent {
+    background: var(--accent);
+    border-color: #16a34a;
+    color: #06210f;
+    font-weight: 600;
+}
+
+label.inline {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    background: #121a2d;
+    border: 1px solid #334155;
+    border-radius: .4rem;
+    padding: .25rem .5rem;
+}
+
+main {
+    padding: 1rem;
+}
+
+
+/* Prevent page scroll/zoom/pan from stealing the pointer during drawing */
+.stage,
+#overlay,
+#raster {
+    touch-action: none;
+    /* disables panning/zooming gestures */
+    user-select: none;
+    /* avoid text selection */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+
+
+
+
+
+.stage {
+    overscroll-behavior: contain;
+    /* keep scroll-chaining from canceling input */
+    position: relative;
+    width: min(1400px, 95vw);
+    margin: 0 auto;
+    background: #0b1120;
+    border: 1px solid #1f2a44;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+#raster,
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+#raster {
+    image-rendering: auto;
+    background: #0b1120;
+}
+
+#overlay {
+    pointer-events: none;
+    cursor: crosshair;
+    /* drawing uses listeners on container; toggled in JS for handles */
+}
+
+.handles circle {
+    pointer-events: all;
+}
+
+@media (max-width: 640px) {
+    .toolbar {
+        gap: .5rem;
+    }
+}
